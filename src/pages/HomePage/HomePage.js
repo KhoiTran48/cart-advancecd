@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Container from './components/Container';
-class App extends Component {
+class HomePage extends Component {
   render() {
     return (
       <Container/>
@@ -9,4 +9,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default HomePage;
