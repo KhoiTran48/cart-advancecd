@@ -1,3 +1,4 @@
+import * as types from './../constants/ActionTypes';
 var init=[
     {
       "id": 10,
@@ -43,13 +44,10 @@ var init=[
 
 const ProductReducer=(state=init, action)=>{
     switch (action.type) {
-        case value:
+        // case types.ADD_CART:
             
-            break;
-    
         default:
             return [...state]
-            break;
     }
 }
 

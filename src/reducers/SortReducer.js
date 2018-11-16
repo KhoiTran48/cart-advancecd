@@ -1,5 +1,6 @@
 var init={
-    sort:'not';
+    by:"",
+    value:""
 }
 
 const SortReducer=(state=init, action)=>{
