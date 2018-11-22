@@ -6,7 +6,7 @@ import CartReducer from './CartReducer';
 const allReducer=combineReducers({
     filter: FilterReducer,
     products:   ProductReducer,
-    cart:   CartReducer
+    cartInfo:   CartReducer
 })
 
 export default allReducer;

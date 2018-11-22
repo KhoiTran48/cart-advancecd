@@ -2,7 +2,7 @@ import * as types from './../constants/ActionTypes';
 
 var initial={
     sizes:['XS', 'S', 'M', 'ML', 'L', 'XL', 'XXL'],
-    filterItems:['XS','L']
+    filterItems:[]
 }
 
 const FilterReducer=(state=initial, action)=>{

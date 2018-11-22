@@ -9,20 +9,25 @@ import * as actions from './../actions/index';
 
 class CartContainer extends Component {
     render() {
-        var {carts, closeCart, checkout}=this.props;
+        
+        var {cartInfo, toggleCart, checkout}=this.props;
+        var cartSumary=this.cartSumary(cartInfo.carts);
         return (
             <Cart
-                closeCart={closeCart}
+                showCart={cartInfo.showCart}
+                totalQuantity={cartSumary.totalQuantity}
+                toggleCart={toggleCart}
                 checkout={checkout}
-                cartItem={this.showCartItem(carts)}
-                footer={this.showFooter()}
+                cartItem={this.showCartItem(cartInfo.carts)}
+                footer={this.showFooter(cartSumary.totalValue)}
             />
         );
     }
-    showFooter(){
-        var {checkout}=this.props;
+    showFooter(totalValue){
+        var {checkout, carts}=this.props;
         return <CartFooter
                     checkout={checkout}
+                    subTotal={totalValue}
                 />;
     }
     showCartItem=(carts)=>{
@@ -40,10 +45,25 @@ class CartContainer extends Component {
         }
         return result;
     }
+    cartSumary=(carts)=>{
+        var totalValue=0;
+        var totalQuantity=0;
+        if(carts.length >0){
+            carts.forEach(item => {
+                totalValue+=item.quantity * item.product.price;
+                totalQuantity+=item.quantity;
+            });
+        }
+        return {
+            totalValue,
+            totalQuantity
+        };
+    }
 }
 const mapState=(state)=>{
+    // console.log(state.cartInfo);
     return {
-        carts:state.cart
+        cartInfo:state.cartInfo
     }
 }
 const mapDispatch=(dispatch,props)=>{
@@ -54,8 +74,8 @@ const mapDispatch=(dispatch,props)=>{
         deleteCart:(product)=>{
             dispatch(actions.DELETE_CART(product));
         },
-        closeCart:()=>{
-            dispatch(actions.CLOSE_CART());
+        toggleCart:()=>{
+            dispatch(actions.TOGGLE_CART());
         },
         checkout:()=>{
             dispatch(actions.CHECKOUT());

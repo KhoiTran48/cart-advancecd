@@ -22,7 +22,7 @@ class ProductContainer extends Component {
     showProductItem=(products)=>{
         var {addCart, filter}=this.props;
         var result= null;
-        if(products.length >0){
+        if(products.length >0 && filter.length >0){
             products=products.filter((item)=>{
                 var availableSizes=item.availableSizes;
                 if(availableSizes.some(r=> filter.indexOf(r) >= 0)){

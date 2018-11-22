@@ -1,31 +1,33 @@
 import * as types from './../constants/ActionTypes';
 
-var init=[
-    // "showCart":true
-]
+var init={
+    "showCart":false,
+    "carts":[]
+}
 
 const CartReducer=(state=init, action)=>{
     switch (action.type) {
-        case types.CLOSE_CART:
-            // state["showCart"]=false;
-            return [...state];
+        case types.TOGGLE_CART:
+            state["showCart"]=!state["showCart"];
+            return {...state};
         case types.ADD_CART:
             var product=action.product;
-            var index=state.findIndex((item, index)=>{
+            var index=state.carts.findIndex((item, index)=>{
                 return item.product.id === product.id ;
             })
             if(index >= 0){
-                state[index].quantity++;
+                state.carts[index].quantity++;
             }else{
-                state.push({
+                state.carts.push({
                     product,
                     quantity:1
                 })
             }
-            return [...state]
+            state["showCart"]=true;
+            return {...state};
         default:
-            return [...state];
+        return {...state};
     }
 }
-
+// console.log(init);
 export default CartReducer;
