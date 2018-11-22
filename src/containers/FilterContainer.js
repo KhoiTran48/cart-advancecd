@@ -3,7 +3,7 @@ import FilterItem from './../components/filter/FilterItem';
 import FilterSize from './../components/filter/FilterSize';
 import {connect} from 'react-redux';
 
-import * as actions from './actions/index';
+import * as actions from './../actions/index';
 
 class FilterContainer extends Component {
     render() {

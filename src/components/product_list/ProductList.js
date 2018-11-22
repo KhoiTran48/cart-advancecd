@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 
 class ProductList extends Component {
     render() {
-        var {ProductItem, header}=this.props;
+        var {header}=this.props;
+        // console.log(this.props.children);
         return (
         <div class="shelf-container">
             {/* header */}
             {header}
             {/* product items */}
-            {ProductItem}
+            {this.props.children}
             <div class="clearfix"></div>
         </div>
         );

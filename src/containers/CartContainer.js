@@ -1,38 +1,41 @@
 import React, { Component } from 'react';
-import ProductList from '../components/product_list/ProductList';
-import Header from '../components/product_list/Header';
-import ProductItem from '../components/product_list/ProductItem';
+import Cart from './../components/cart/Cart';
+import CartItem from './../components/cart/CartItem';
+import CartFooter from './../components/cart/CartFooter';
 
 import {connect} from 'react-redux';
 
-import * as actions from './actions/index';
+import * as actions from './../actions/index';
 
 class CartContainer extends Component {
     render() {
-        var {products}=this.props;
+        var {carts, closeCart, checkout}=this.props;
         return (
-            <ProductList
-                productItem={this.showProductItem(products)}
-                header={this.showHeader()}
+            <Cart
+                closeCart={closeCart}
+                checkout={checkout}
+                cartItem={this.showCartItem(carts)}
+                footer={this.showFooter()}
             />
         );
     }
-    showHeader(){
-        return <Header/>;
+    showFooter(){
+        var {checkout}=this.props;
+        return <CartFooter
+                    checkout={checkout}
+                />;
     }
-    showProductItem=(products)=>{
-        var {addCart, filter}=this.props;
+    showCartItem=(carts)=>{
+        var {editCart, deleteCart}=this.props;
         var result= null;
-        if(products.length >0){
-            result=products.filter((item, index)=>{
-                var availableSizes=item.availableSizes;
-                if(availableSizes.some(r=> filter.indexOf(r) >= 0)){
-                    return <ProductItem 
-                                key={index}
-                                item={item}
-                                addCart={addCart}
-                            />
-                }
+        if(carts.length >0){
+            result=carts.map((item, index)=>{
+                return <CartItem
+                            key={index}
+                            item={item}
+                            editCart={editCart}
+                            deleteCart={deleteCart}
+                        />
             })
         }
         return result;
@@ -40,14 +43,22 @@ class CartContainer extends Component {
 }
 const mapState=(state)=>{
     return {
-        products:state.products,
-        filter:state.filter.filterItems
+        carts:state.cart
     }
 }
 const mapDispatch=(dispatch,props)=>{
     return {
-        addCart:(product)=>{
-            dispatch(actions.ADD_CART(product));
+        editCart:(product)=>{
+            dispatch(actions.EDIT_CART(product));
+        },
+        deleteCart:(product)=>{
+            dispatch(actions.DELETE_CART(product));
+        },
+        closeCart:()=>{
+            dispatch(actions.CLOSE_CART());
+        },
+        checkout:()=>{
+            dispatch(actions.CHECKOUT());
         }
     }
 }

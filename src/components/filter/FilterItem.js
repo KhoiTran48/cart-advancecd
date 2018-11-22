@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 class FilterItem extends Component {
     render() {
-        var {size}=this.props;
+        var {size, onChangeFilter}=this.props;
         return (
-            <div class="filters-available-size">
+            <div className="filters-available-size">
                 <label>
-                    <input type="checkbox" onChange={onChangeFilter} value={size}/><span class="checkmark">{size} </span> 
+                    <input type="checkbox" onChange={onChangeFilter} value={size}/><span className="checkmark">{size} </span> 
                 </label>
             </div>
         );
