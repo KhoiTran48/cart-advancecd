@@ -71,8 +71,8 @@ const mapDispatch=(dispatch,props)=>{
         editCart:(product)=>{
             dispatch(actions.EDIT_CART(product));
         },
-        deleteCart:(product)=>{
-            dispatch(actions.DELETE_CART(product));
+        deleteCart:(id)=>{
+            dispatch(actions.DELETE_CART(id));
         },
         toggleCart:()=>{
             dispatch(actions.TOGGLE_CART());

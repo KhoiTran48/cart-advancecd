@@ -1,4 +1,20 @@
 import * as types from './../constants/ActionTypes';
+import callApi from './../utils/callAPI';
+
+export const FETCH_PRODUCT_REQUEST=()=>{
+    return (dispatch)=>{
+        return callApi('GET', 'products', null).then(res=>{
+            dispatch(FETCH_PRODUCT(res.data))
+        })
+    }
+}
+
+export const FETCH_PRODUCT=(products)=>{
+    return {
+        type:types.FETCH_PRODUCT,
+        products
+    }
+}
 
 export const CHANGE_FILTER=(filterSize)=>{
     return {
@@ -18,10 +34,10 @@ export const EDIT_CART=(product)=>{
         product
     }
 }
-export const DELETE_CART=(product)=>{
+export const DELETE_CART=(id)=>{
     return {
         type:types.DELETE_CART,
-        product
+        id
     }
 }
 
@@ -42,3 +58,11 @@ export const CLOSE_CART=()=>{
         type:types.CLOSE_CART
     }
 }
+
+export const SORT_PRICE=(value)=>{
+    return {
+        type:types.SORT_PRICE,
+        value
+    }
+}
+

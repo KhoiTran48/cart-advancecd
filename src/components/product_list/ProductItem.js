@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 
 class ProductItem extends Component {
+    showIconFreeShip(){
+        return(
+            <div class="shelf-stopper">Free shipping</div>
+        )
+    }
     render() {
         var {item, addCart}=this.props;
         return (
             <div class="shelf-item">
-                <div class="shelf-stopper">{item.isFreeShipping ? 'Free shipping': ''}</div>
+                {item.isFreeShipping ? this.showIconFreeShip() : ''}
                 <div class="shelf-item__thumb"><img src={require(`../../static/products/${item.sku}_1.jpg`)} alt={item.title}/></div>
                 <p class="shelf-item__title">{item.title}</p>
                 <div class="shelf-item__price">

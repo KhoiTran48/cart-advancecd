@@ -8,29 +8,47 @@ import {connect} from 'react-redux';
 import * as actions from './../actions/index';
 
 class ProductContainer extends Component {
+    componentWillMount=()=>{
+        this.props.onFetchProducts();
+    }
     render() {
-        var {products}=this.props;
+        var {products, sortPrice}=this.props;
+        var proInfo=this.showProductItem(products);
         return (
-            <ProductList header={this.showHeader()}>
-                {this.showProductItem(products)}
+            <ProductList header={this.showHeader(proInfo.totalProduct, sortPrice)}>
+                {proInfo.productList}
             </ProductList>
         );
     }
-    showHeader(){
-        return <Header/>;
+    showHeader(totalProduct, sortPrice){
+        return <Header totalProduct={totalProduct} sortPrice={sortPrice}/>;
     }
     showProductItem=(products)=>{
-        var {addCart, filter}=this.props;
-        var result= null;
-        if(products.length >0 && filter.length >0){
-            products=products.filter((item)=>{
-                var availableSizes=item.availableSizes;
-                if(availableSizes.some(r=> filter.indexOf(r) >= 0)){
-                    return item;
+        var {addCart, filter, sort}=this.props;
+        var result= [];
+        if(products.length >0){
+            if(filter.length >0){
+                products=products.filter((item)=>{
+                    var availableSizes=item.availableSizes;
+                        if(availableSizes.some(r=> filter.indexOf(r) >= 0)){
+                            return item;
+                        }
+                    })
+            }
+            if(sort.by !=='' && sort.value !==''){
+                if(sort.by==='price'){
+                    if(sort.value==='lowestprice'){
+                        products.sort((pro1, pro2)=>{
+                            return pro1.price - pro2.price;
+                        })
+                    }
+                    else if(sort.value==='highestprice'){
+                        products.sort((pro1, pro2)=>{
+                            return pro2.price - pro1.price;
+                        })
+                    }
                 }
-            })
-        }
-        if(products.length > 0){
+            }
             result=products.map((item, index)=>{
                 return  <ProductItem 
                                 key={index}
@@ -39,19 +57,30 @@ class ProductContainer extends Component {
                         />
             })
         }
-        return result;
+        
+        return {
+            productList:result,
+            totalProduct:result.length
+        };
     }
 }
 const mapState=(state)=>{
     return {
         products:state.products,
-        filter:state.filter.filterItems
+        filter:state.filter.filterItems,
+        sort: state.sort
     }
 }
 const mapDispatch=(dispatch,props)=>{
     return {
         addCart:(product)=>{
             dispatch(actions.ADD_CART(product));
+        },
+        sortPrice:(value)=>{
+            dispatch(actions.SORT_PRICE(value))
+        },
+        onFetchProducts:()=>{
+            dispatch(actions.FETCH_PRODUCT_REQUEST())
         }
     }
 }

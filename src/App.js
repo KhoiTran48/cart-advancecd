@@ -15,7 +15,7 @@ class App extends Component {
                 {/* product list */}
                 <ProductContainer/>
             </main>
-            <Footer/>
+            {/* <Footer/> */}
             <CartContainer/>
             </div>
         );

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 class CartFooter extends Component {
+    checkout=(subTotal)=>{
+        alert(`Checkout - Subtotal: $ ${subTotal}`)
+    }
     render() {
         var {checkout, subTotal}=this.props;
         return (
@@ -8,7 +11,7 @@ class CartFooter extends Component {
                 <div class="sub">SUBTOTAL</div>
                 <div class="sub-price">
                     <p class="sub-price__val">$ {subTotal}</p></div>
-                <div class="buy-btn" onClick={checkout}>Checkout</div>
+                <div class="buy-btn" onClick={()=>this.checkout(subTotal)}>Checkout</div>
             </div>
         );
     }

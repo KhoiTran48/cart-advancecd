@@ -6,7 +6,6 @@ class FilterSize extends Component {
             <div className="filters">
                 <h4 className="title">Sizes:</h4>
                 {this.props.children}
-                <div className="star-button-container"><small>Leave a star on Github if this repository was useful :)</small><span></span></div>
             </div>
         );
     }
